@@ -1,1 +1,0 @@
-export const helloTest:()=>string=function(){ return 'wonderful'; } 
