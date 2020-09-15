@@ -37,6 +37,7 @@
         }
     },
     "dependencies": {
+        "@types/filesystem": "0.0.29",
         "@types/node-fetch": "^2.5.7",
         "@types/puppeteer": "^3.0.2",
         "csv-parse": "^4.12.0",
