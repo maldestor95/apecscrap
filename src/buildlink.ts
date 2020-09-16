@@ -26,31 +26,35 @@ export interface runOption {
     all: runOptionEnum
     APEClink: string
 }
+export const importData = async (datapath:string): Promise<DataSet> => {
+    // `${__dirname}/../data.json`
+    // const importDataFromJSON = await importJSON(datapath)
+    //     .catch((err: string) => { console.log(err) })
+        return new Promise((resolve) => {
+            resolve (<DataSet>[])
+        });
+    // return <DataSet>await importDataFromJSON
+}
+const updateDatafromLink = async (keywords: Array<string>,link:string): Promise<dataInterface> => {
+    const getAPECQty = await getAPECdata(link, keywords)
+    const resultFormatted: dataInterface = {
+        "result": getAPECQty,
+        "date": new Date().toLocaleDateString(),
+        "keywords": keywords
+    }
+    return resultFormatted
+}
 export const run = async (runOption: runOption): Promise<DataSet | undefined> => {
     if (runOption) console.log(`runOption : ${JSON.stringify(runOption)}`)
 
-    const importDataFromJSON = await importJSON(`${__dirname}/../data.json`)
-        .catch((err: string) => { console.log(err) })
-
-    const importedData = <DataSet>await importDataFromJSON
-
+    const importedData = <DataSet>await importData( `${__dirname}/../data.json`)
     const newQuery = importedData.filter(data => {
         return !Object.keys(data).includes(<string>runOption.all)
+    })  
+    const newQueryPromise = newQuery.map(async (q) => {
+        return await updateDatafromLink(q.keywords,runOption.APEClink)
     })
-
-    const updateData = async (keywords: Array<string>):Promise<dataInterface> => {
-        const getAPECQty = await getAPECdata(runOption.APEClink, keywords)
-        const resultFormatted: dataInterface = {
-            "result": getAPECQty,
-            "date": new Date().toLocaleDateString(),
-            "keywords": keywords
-        }
-        return resultFormatted
-    }
-    const newQueryPromise=newQuery.map(async (q)=>{
-        return await updateData(q.keywords)
-    })
-    const processedPromise:Promise<DataSet>= Promise.all(newQueryPromise).then((values)=>{
+    const processedPromise: Promise<DataSet> = Promise.all(newQueryPromise).then((values) => {
         return values
     })
     return await processedPromise
