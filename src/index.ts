@@ -1,43 +1,36 @@
-import { getAPECdata , run, runOptionEnum} from './buildlink'
-import { importJSON} from "./datamanager"
+import { writeJSON } from "./datamanager"
+import { fetchUrl, JOBqs, BoardEngine } from "./jobboardquery"
 
 
-/*const main = async () => {
-    keywords.forEach(async (kw) => {
-        const result = await getAPECdata(APECLink, kw)
-        console.log(result, kw.toString())
-    }
-    )
+
+let qs: JOBqs = {
+    where: '59',
+    words: 'anglais projet'
 }
 
+import * as readline from "readline";
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-const keywords:Array<Array<string>> = [['ingenieur', 'systeme']]
-/*
-    ['ingenieur', 'systeme'],
-    // ['projet'],
-    // ['projet','anglais'],
-    // ['anglais'],
-    // ['javascript'],
-    // ['js'],
-    // ['vuejs'],
-    // ['react'],
-    // ['coordinateur'],
+const question = async () => {
+    rl.question("keywords separated with spaces ? ", async (words) => {
+        try {
 
-]
-*/
-// main()
+            qs.words = words
+            console.log(`APEC: ${await fetchUrl(qs, BoardEngine["APEC"])}`)
+            console.log(`MONSTER: ${await fetchUrl(qs, BoardEngine["MONSTER"])}`)
+            question()
+        } catch (error) {
+            question()
+        }
+    })
+}
 
-(async () => {
-    const APECLink = "https://www.apec.fr/candidat/recherche-emploi.html/emploi?lieux=59&motsCles=$$REPLACE$$&page=0"
-    // const test=await importJSON(`${__dirname}/../data.json`)
-    //     .catch((err:string)=>{console.log(err)})        
-    // console.log(test)
-    const res=await run({all:runOptionEnum.NODATE,APEClink:APECLink})  
-    // const res=await run({all:runOptionEnum.NORESULT,APEClink:APECLink})  
-    // const res=await run({all:runOptionEnum.ALL,APEClink:APECLink})  
-    console.log(res)
-    // const res2=await run({all:runOptionEnum.ALL,APEClink:APECLink})  
-    // console.log(res2)
-    // const res3=await run({all:runOptionEnum.NORESULT,APEClink:APECLink})  
-    // console.log(res3) 
-})()
+question()
+
+rl.on("close", function () {
+    console.log("\nBYE BYE !!!");
+    process.exit(0);
+});

@@ -1,6 +1,6 @@
 import * as apec from "../jobboardquery"
 import {expect} from "chai"
-describe.only('apec', function() {
+describe('apec', function() {
     this.timeout(10000)
     const qs:apec.JOBqs={
         where:'59',
