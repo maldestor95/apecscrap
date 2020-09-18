@@ -1,7 +1,7 @@
 {
-    "name": "apec_grabber",
+    "name": "apecscrap",
     "version": "0.0.1",
-    "description": "grab data depending on keywords",
+    "description": "Pull some information from job boards",
     "main": "index.js",
     "scripts": {
         "start": "npm run build && node build/index.js",
@@ -14,7 +14,7 @@
     },
     "keywords": [],
     "author": "Ludovic Deparis",
-    "homepage": "https://github.com/maldestor95/nodejs_typescript_template",
+    "homepage": "https://github.com/maldestor95/apecscrap.git",
     "license": "MIT",
     "devDependencies": {
         "@commitlint/cli": "^9.1.2",

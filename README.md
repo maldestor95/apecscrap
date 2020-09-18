@@ -1,12 +1,18 @@
-# nodejs typescript template
+# apec scrap
+
 
 ## Introduction
-The objective of this repository is a template setup for a TypeScript project running on NodeJS
+Pull some information from job boards
+
+## release
+0.0.1
+* in command line, can pull data from APEC&MONSTER for some keywords separated by spaces 
+
+## TODO
+* manage post queries to includes jobboard such as cadremploi
 
 ## Installation
-* clone the repository
-* remove repository dependency (break link to this template)
-* edit package.json to change project description, credentials...
+`npm install`
 
 ## Development script
 
